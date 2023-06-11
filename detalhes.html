@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>product Details</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">E-Commerce</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Cart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Account</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+  <main>
+    <section class="product-details">
+      <div class="container">
+        <div class="row m-5">
+          <div class="col-md-6">
+            <img id="product-image" src="" alt="Product Image">
+          </div>
+          <div class="col-md-6" style="text-align: justify;">
+            <h2 id="product-title"></h2>
+            <p id="product-category"></p>
+            <p id="product-description"></p>
+            <p id="product-price"style="font-weight: bold;"></p>
+            <p id="product-rating"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    fetch(`https://fakestoreapi.com/products/${productId}`)
+      .then(response => response.json())
+      .then(product => {
+        // Atualizar as informações do produto na página
+        document.getElementById('product-image').src = product.image;
+        document.getElementById('product-title').textContent = product.title;
+        document.getElementById('product-category').textContent = `Category: ${product.category}`;
+        document.getElementById('product-description').textContent = `Description: ${product.description}`;
+        document.getElementById('product-price').textContent = `Price: $${product.price}`;
+        document.getElementById('product-rating').textContent = `Rating: ${product.rating.rate}`;
+      })
+      .catch(error => {
+        console.error('Erro ao obter os detalhes do produto:', error);
+      });
+  </script>
+</body>
+</html>
